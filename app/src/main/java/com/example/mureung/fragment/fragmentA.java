@@ -2,9 +2,11 @@ package com.example.mureung.fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,32 +50,40 @@ public class fragmentA extends Fragment{
         final TextView lng=(TextView)view.findViewById(R.id.lng);
         lng.setText("경도: "+b);
 
-
         MarkerOptions marker=new MarkerOptions().position( new LatLng(a, b));
         /*marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon01));아이콘 바꾸는 코드*/
 
         mMap.addMarker(marker);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(a, b), 17));
 
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+        Button button = (Button) view.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onMapLongClick(LatLng latLng) {
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                mMap.clear();
-                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                mMap.addMarker(markerOptions);
-                final TextView lat=(TextView)view.findViewById(R.id.lat);
-                a=latLng.latitude;
-                b=latLng.longitude;
-                lat.setText("위도: "+a);
-                final TextView lng=(TextView)view.findViewById(R.id.lng);
-                lng.setText("경도: "+b);
+            public void onClick(View v)
+            {
+                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                    @Override
+                    public void onMapLongClick(LatLng latLng) {
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(latLng);
+                        mMap.clear();
+                        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                        mMap.addMarker(markerOptions);
+                        final TextView lat=(TextView)view.findViewById(R.id.lat);
+                        a=latLng.latitude;
+                        b=latLng.longitude;
+                        lat.setText("위도: "+a);
+                        final TextView lng=(TextView)view.findViewById(R.id.lng);
+                        lng.setText("경도: "+b);
+                        Log.e("222","222");
 
-                //lat,lng 보내는 코드, 어차피 수정안했을때는 다시보내줄 필요 x
+                        //lat,lng 보내는 코드, 어차피 수정안했을때는 다시보내줄 필요 x
 
-            }});
+                    }});
+            } });
     }});
+
         return view;
     }
  @Override
