@@ -48,8 +48,7 @@ public class fragmentA extends Fragment{
         lng.setText("경도: "+b);
 
         // a,b 입력받도록 변경
-        LatLng sydney = new LatLng(a, b);
-        MarkerOptions marker=new MarkerOptions().position(sydney);
+        MarkerOptions marker=new MarkerOptions().position( new LatLng(a, b));
         /*marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon01));아이콘 바꾸는 코드*/
 
         mMap.addMarker(marker);
