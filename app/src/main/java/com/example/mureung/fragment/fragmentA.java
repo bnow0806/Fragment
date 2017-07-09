@@ -23,6 +23,7 @@ public class fragmentA extends Fragment{
     double a = 37.541;
     double b = 126.986;
     private GoogleMap mMap;
+    // a,b 입력받도록 변경
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,16 +48,16 @@ public class fragmentA extends Fragment{
         final TextView lng=(TextView)view.findViewById(R.id.lng);
         lng.setText("경도: "+b);
 
-        // a,b 입력받도록 변경
+
         MarkerOptions marker=new MarkerOptions().position( new LatLng(a, b));
         /*marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon01));아이콘 바꾸는 코드*/
 
         mMap.addMarker(marker);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(a, b), 17));
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public void onMapClick(LatLng latLng) {
+            public void onMapLongClick(LatLng latLng) {
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
                 mMap.clear();
@@ -68,10 +69,10 @@ public class fragmentA extends Fragment{
                 lat.setText("위도: "+a);
                 final TextView lng=(TextView)view.findViewById(R.id.lng);
                 lng.setText("경도: "+b);
+
+                //lat,lng 보내는 코드, 어차피 수정안했을때는 다시보내줄 필요 x
+
             }});
-
-        //lat,lng 보내는 코드
-
     }});
         return view;
     }
