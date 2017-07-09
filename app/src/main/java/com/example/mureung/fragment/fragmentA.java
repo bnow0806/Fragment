@@ -70,6 +70,9 @@ public class fragmentA extends Fragment{
                 final TextView lng=(TextView)view.findViewById(R.id.lng);
                 lng.setText("경도: "+b);
             }});
+
+        //lat,lng 보내는 코드
+
     }});
         return view;
     }
