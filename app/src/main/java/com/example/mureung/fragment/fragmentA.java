@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,15 +19,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class fragmentA extends Fragment{
 
     MapView   mMapView;
-    private GoogleMap gMap;
 
-    double lat = 37.541;
-    double lng = 126.986;
-    private GoogleMap googleMap;
+    double a = 37.541;
+    double b = 126.986;
+    private GoogleMap mMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmenta, container, false);
+        final View view = inflater.inflate(R.layout.fragmenta, container, false);
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
                  mMapView.onCreate(savedInstanceState);
@@ -39,35 +39,44 @@ public class fragmentA extends Fragment{
         mMapView.getMapAsync(new OnMapReadyCallback() {
 
     @Override
-    public void onMapReady(GoogleMap mMap) {
-        googleMap=mMap;
-        googleMap.setMyLocationEnabled(true);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 15));
-        MarkerOptions marker = new MarkerOptions();
-        marker.position(new LatLng(lat, lng));
-        googleMap.addMarker(marker).showInfoWindow();
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        final TextView lat=(TextView)view.findViewById(R.id.lat);
+        lat.setText("위도: "+a);
+        final TextView lng=(TextView)view.findViewById(R.id.lng);
+        lng.setText("경도: "+b);
+
+        // a,b 입력받도록 변경
+        LatLng sydney = new LatLng(a, b);
+        MarkerOptions marker=new MarkerOptions().position(sydney);
+        /*marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon01));아이콘 바꾸는 코드*/
+
+        mMap.addMarker(marker);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(a, b), 17));
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                mMap.clear();
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                mMap.addMarker(markerOptions);
+                final TextView lat=(TextView)view.findViewById(R.id.lat);
+                a=latLng.latitude;
+                b=latLng.longitude;
+                lat.setText("위도: "+a);
+                final TextView lng=(TextView)view.findViewById(R.id.lng);
+                lng.setText("경도: "+b);
+            }});
+    }});
+        return view;
     }
-        });
-    return view;
+ @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
     }
-      @Override
-         public void onResume() {
-             super.onResume();
-             mMapView.onResume();
-         }
-         @Override
-         public void onPause() {
-             super.onPause();
-             mMapView.onPause();
-         }
-         @Override
-         public void onDestroy() {
-             super.onDestroy();
-             mMapView.onDestroy();
-         }
-         @Override
-         public void onLowMemory() {
-             super.onLowMemory();
-             mMapView.onLowMemory();
-       }
-}
+
+    }
