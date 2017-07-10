@@ -92,7 +92,7 @@ public class fragmentA extends Fragment{
     public void onResume() {
         super.onResume();
         mMapView.onResume();
-    }
+    }//
 }
 
 
