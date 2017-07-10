@@ -11,4 +11,5 @@
         android:id="@+id/fragmenta"
         android:name="com.example.mureung.fragment.fragmentA"
         />
+
 </LinearLayout>
