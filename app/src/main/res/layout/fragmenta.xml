@@ -41,13 +41,7 @@
 
     <com.google.android.gms.maps.MapView
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="match_parent"
         android:id="@+id/mapView" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="마커를 누르고 지도앱으로 공유해보세요!"
-        android:gravity="center"
-        android:textSize="20dp"
-        />
+
 </LinearLayout>
