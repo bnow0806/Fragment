@@ -19,6 +19,7 @@ import com.kakao.KakaoLink;
 import com.kakao.KakaoParameterException;
 import com.kakao.KakaoTalkLinkMessageBuilder;
 
+//by sung 2017.7.11
 
 public class fragmentA extends Fragment{
 
@@ -27,10 +28,14 @@ public class fragmentA extends Fragment{
 
     MapView   mMapView;
 
+    //Device_DataStream device_dataStream = new Device_DataStream();
+    //device_dataStream.getGPSLatitude(); 자체가 변수
+   //device_dataStream.getGPSLongitude();
+
     double a = 37.541;
     double b = 126.986;
     private GoogleMap mMap;
-    // a,b 입력받도록 변경해야됨
+    // 위도와 경도 a,b 입력받도록 변경해야됨
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,6 +78,7 @@ public class fragmentA extends Fragment{
             {
                 try {
                     //kakaotalk 웹주소 공유코드
+                    /*String text="http://maps.google.com/?q="+a+","+b;*/
                     String text="https://www.google.com/maps/search/"+a+","+b+"/data=!4m2!2m1!4b1?hl=ko&nogmmr=1";
                     kakaoLink = KakaoLink.getKakaoLink(getActivity().getApplicationContext());
                     kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
