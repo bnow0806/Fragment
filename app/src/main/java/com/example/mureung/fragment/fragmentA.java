@@ -19,7 +19,8 @@ import com.kakao.KakaoLink;
 import com.kakao.KakaoParameterException;
 import com.kakao.KakaoTalkLinkMessageBuilder;
 
-//by sung 2017.7.11
+//by Hyunje Sung 2017.7.11
+//주차확인모드
 
 public class fragmentA extends Fragment{
 
@@ -49,9 +50,10 @@ public class fragmentA extends Fragment{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //fragment인 mapView에 MapView를 그림
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
-        //mapView를 받아서 callback함수 실행
+        //mMapView를 받아서 callback함수 실행
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;

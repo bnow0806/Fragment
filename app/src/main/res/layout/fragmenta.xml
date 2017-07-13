@@ -13,6 +13,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="주차위치 확인"
+            android:textSize="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/lat"
             android:textSize="20dp"/>
         <LinearLayout
@@ -32,7 +39,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="공유"
+                    android:text="링크 공유"
                     android:id="@+id/kakaoshare"/>
             </LinearLayout>
         </LinearLayout>
@@ -41,7 +48,12 @@
 
     <com.google.android.gms.maps.MapView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="350dp"
         android:id="@+id/mapView" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="마커를 누르고 지도앱으로 공유도 가능합니다."
+        android:textSize="20dp" />
 
 </LinearLayout>
