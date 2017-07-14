@@ -13,19 +13,23 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kakao.KakaoLink;
 import com.kakao.KakaoParameterException;
 import com.kakao.KakaoTalkLinkMessageBuilder;
 
-//by Hyunje Sung 2017.7.11
+/**
+ * Created by HyunJe on 2017-07-11.
+ */
 //주차확인모드
 
 public class fragmentA extends Fragment{
 
     private KakaoLink kakaoLink;
     private KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder;
+    //카카오 링크보내는 클래스들
 
     MapView   mMapView;
 
@@ -36,7 +40,7 @@ public class fragmentA extends Fragment{
     double a = 37.541;
     double b = 126.986;
     private GoogleMap mMap;
-    // 위도와 경도 a,b 입력받도록 변경해야됨
+    // 위도와 경도(a,b) 입력받도록 변경해야됨
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class fragmentA extends Fragment{
                 lng.setText("경도: "+b);
 
                 MarkerOptions marker=new MarkerOptions().position( new LatLng(a, b));
-        /*marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_icon01)); 마커의 아이콘 바꾸는 코드*/
+                //marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_opacity_black_24dp));// 마커의 아이콘 바꾸는 코드
 
                 mMap.addMarker(marker);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(a, b), 17));
@@ -102,7 +106,6 @@ public class fragmentA extends Fragment{
         mMapView.onResume();
     }
     //링크보내는 매소드
-
    /* private KakaoLink kakaoLink;
         private KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder;
 
