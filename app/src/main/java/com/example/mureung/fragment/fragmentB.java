@@ -3,12 +3,18 @@ package com.example.mureung.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+
 
 
 /**
@@ -26,34 +32,70 @@ public class fragmentB extends Fragment {
 
     private ProgressBar mProgress;
     Handler handler;
-    WorkerTread thread;
+    public WorkerTread thread=null;
     TextView progress;
+    EditText eidtsrc;
+    String srcdata=null;
    //progressbar 변수 및 초기값 선언
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragmentb, container, false);
+        final View view = inflater.inflate(R.layout.fragmentb, container, false);
         //inflate 로 fragment layout 설정
 
         TextView fuel1=(TextView)view.findViewById(R.id.fuel1);
         progress=(TextView)view.findViewById(R.id.progress);
+
+
+        //layout 값들 선언
+
+        View.OnClickListener listener=new View.OnClickListener(){
+            public void onClick(View v){
+                eidtsrc=(EditText)view.findViewById(R.id.edit_src) ;
+                srcdata = eidtsrc.getText().toString();
+                Log.e("111",srcdata);
+
+                thread= new WorkerTread(handler, srcdata);
+                thread.what=0;
+                thread.srcdata=srcdata;
+                thread.start();
+
+                }
+
+
+        };
+        Button button=(Button)view.findViewById(R.id.button);
+        button.setOnClickListener(listener);
+
+        View.OnClickListener listener2=new View.OnClickListener(){
+            public void onClick(View v){
+                //do something
+                thread.what=1;
+                Log.e("123","123");
+            }
+        };
+        Button button2=(Button)view.findViewById(R.id.button2);
+        button2.setOnClickListener(listener2);
+
+
         fuel1.setText(avgfuel+"원");
-        //text에 들어갈 값을 데이터로 설정
+        //퍼센트값 text에 들어갈 값을 데이터로 설정
         mProgress=(ProgressBar) view.findViewById(R.id.progress_bar);
         mProgress.setProgress(0);
-        progress.setText(0.0+"%");//progressbar 초기값 지정
+        progress.setText(0.0+"%");//progressbar 옆 숫자 초기값 지정
 
         //handler class를 이용한 ui스레드 제어
         handler=new Handler(){
             public void handleMessage(Message msg){
-
                 mProgress.setProgress(msg.arg1);
                 progress.setText((double)msg.arg1/10+"%");
+                Log.e("444","444");
             }
         };
-        thread= new WorkerTread(handler);
-        thread.start();
-return view;
-}}
+        /*thread= new WorkerTread(handler, srcdata);
+        thread.start();*/
+        return view;
+}
+}
 
 
 

@@ -1,5 +1,6 @@
 package com.example.mureung.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,8 +18,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kakao.KakaoLink;
+
 import com.kakao.KakaoParameterException;
 import com.kakao.KakaoTalkLinkMessageBuilder;
+import com.kakao.internal.LinkObject;
 
 /**
  * Created by HyunJe on 2017-07-11.
@@ -83,16 +86,23 @@ public class fragmentA extends Fragment{
             public void onClick(View v)
             {
                 try {
+
+                    //안드로이드 내장함수 공유사용
+                    Intent msg = new Intent(Intent.ACTION_SEND);
+                    msg.addCategory(Intent.CATEGORY_DEFAULT);
+                    msg.putExtra(Intent.EXTRA_SUBJECT, "주차위치확인");
+                    msg.putExtra(Intent.EXTRA_TEXT, "https://www.google.com/maps/search/"+a+","+b+"/data=!4m2!2m1!4b1?hl=ko&nogmmr=1");
+                    msg.setType("text/plain");
+                    startActivity(Intent.createChooser(msg, "공유하기"));
+
                     //kakaotalk 웹주소 공유코드
-                    /*String text="http://maps.google.com/?q="+a+","+b;*/
-                    String text="https://www.google.com/maps/search/"+a+","+b+"/data=!4m2!2m1!4b1?hl=ko&nogmmr=1";
+                    /*String text="https://www.google.com/maps/search/"+a+","+b+"/data=!4m2!2m1!4b1?hl=ko&nogmmr=1";
                     kakaoLink = KakaoLink.getKakaoLink(getActivity().getApplicationContext());
                     kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
                     kakaoTalkLinkMessageBuilder.addText(text);
-                    kakaoLink.sendMessage(kakaoTalkLinkMessageBuilder.build(),getActivity());
-                    kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
+                    kakaoLink.sendMessage(kakaoTalkLinkMessageBuilder.build(),getActivity());*/
 
-                } catch (KakaoParameterException e) {
+                } catch (Exception e) {
                     e.getMessage();
                 }
             }

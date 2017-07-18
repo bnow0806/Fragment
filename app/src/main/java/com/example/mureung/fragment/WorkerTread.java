@@ -1,7 +1,7 @@
 package com.example.mureung.fragment;
 import android.os.Handler;
 import android.os.Message;
-
+import android.util.Log;
 
 
 /**
@@ -11,20 +11,68 @@ import android.os.Message;
 
 public class WorkerTread extends Thread {
 Handler handler;
+String srcdata = null;
+int what=0;
 
-    WorkerTread(Handler handler){
+int i=0;// 현재값
+    WorkerTread(Handler handler, String srcdata){
         this.handler=handler;
+        this.srcdata=srcdata;
     }
+
 public void run(){
+    int src = Integer.parseInt(srcdata);
+    Log.e("666",":"+src);
+    if(i < src ){
+        while(i!=src){
+            try{
+                Thread.sleep(30);//기다리는 함수
+            }catch(Exception e){}
+
+            Message msg=new Message();
+            msg.arg1=i;
+            handler.sendMessage(msg);
+            i=i+1;
+            if(this.what==1){
+                break;
+            }
+        }
+    }
+    else if(i> src){
+        while(i!=src){
+            try{
+                Thread.sleep(30);//기다리는 함수
+            }catch(Exception e){}
+
+            Message msg=new Message();
+            msg.arg1=i;
+            handler.sendMessage(msg);
+            i=i-1;
+            if(this.what==1){
+                break;
+            }
+        }
+    }
+    else{}}
+
+}
+
+
+
+
+
+
+
 
 //i를 0~1000, 1000~0, 0~1000 시뮬레이터
-    for(int i=0;i<1001;i++){
+   /*for(int i=0;i<1001;i++){
         try{
             Thread.sleep(10);//기다리는 함수
         }catch(Exception e){}
         Message msg=new Message();
         msg.arg1=i;
         handler.sendMessage(msg);}
+
     for(int j=1001;j>0;j--){
         try{
             Thread.sleep(10);
@@ -38,5 +86,4 @@ public void run(){
         }catch(Exception e){}
         Message msg=new Message();
         msg.arg1=k;
-        handler.sendMessage(msg);}
-}}
+        handler.sendMessage(msg);}*/
