@@ -14,7 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -36,6 +37,7 @@ public class fragmentB extends Fragment {
     TextView progress;
     EditText eidtsrc;
     String srcdata=null;
+    public int oldsrcdata=0;
    //progressbar 변수 및 초기값 선언
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,27 +56,25 @@ public class fragmentB extends Fragment {
                 srcdata = eidtsrc.getText().toString();
                 Log.e("111",srcdata);
 
-                thread= new WorkerTread(handler, srcdata);
+                thread= new WorkerTread(handler, srcdata, oldsrcdata);
                 thread.what=0;
-                thread.srcdata=srcdata;
                 thread.start();
+                //timer 로 일정시간후 thread 반복 동작을 멈추게함
 
+                new Timer().schedule(new TimerTask() { public void run() {
+                    thread.what=1;
+                    oldsrcdata=thread.endsrcdata;
+                    Log.e("777",String.valueOf(oldsrcdata));
+                } }, 3000);
+
+                /*oldsrcdata=thread.endsrcdata;
+                Log.e("777",String.valueOf(oldsrcdata));*/
                 }
-
 
         };
         Button button=(Button)view.findViewById(R.id.button);
         button.setOnClickListener(listener);
 
-        View.OnClickListener listener2=new View.OnClickListener(){
-            public void onClick(View v){
-                //do something
-                thread.what=1;
-                Log.e("123","123");
-            }
-        };
-        Button button2=(Button)view.findViewById(R.id.button2);
-        button2.setOnClickListener(listener2);
 
 
         fuel1.setText(avgfuel+"원");
@@ -95,6 +95,9 @@ public class fragmentB extends Fragment {
         thread.start();*/
         return view;
 }
+
+
+
 }
 
 

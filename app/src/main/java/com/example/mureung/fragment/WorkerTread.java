@@ -11,50 +11,61 @@ import android.util.Log;
 
 public class WorkerTread extends Thread {
 Handler handler;
-String srcdata = null;
+static int endsrcdata =0;
+String newsrcdata= null;
 int what=0;
+int i;// 현재값
 
-int i=0;// 현재값
-    WorkerTread(Handler handler, String srcdata){
+    WorkerTread(Handler handler, String newsrcdata, int oldsrcdata){
         this.handler=handler;
-        this.srcdata=srcdata;
+        this.newsrcdata=newsrcdata;
+        this.i=oldsrcdata;
     }
 
 public void run(){
-    int src = Integer.parseInt(srcdata);
-    Log.e("666",":"+src);
+    int src = Integer.parseInt(newsrcdata);
+    Log.e("src:",String.valueOf(src));
+    Log.e("i:",String.valueOf(i));
+    if(i==src){
+    // 유지코드
+    }
     if(i < src ){
-        while(i!=src){
+        while(i <= src){
             try{
-                Thread.sleep(30);//기다리는 함수
+                Thread.sleep(10);//기다리는 함수
             }catch(Exception e){}
 
             Message msg=new Message();
             msg.arg1=i;
             handler.sendMessage(msg);
             i=i+1;
+            endsrcdata=i;
+
             if(this.what==1){
+                Log.e("endsrcdata",":"+endsrcdata);
                 break;
             }
         }
     }
     else if(i> src){
-        while(i!=src){
+        while(i>=src){
             try{
-                Thread.sleep(30);//기다리는 함수
+                Thread.sleep(10);//기다리는 함수
             }catch(Exception e){}
 
             Message msg=new Message();
             msg.arg1=i;
             handler.sendMessage(msg);
             i=i-1;
+            endsrcdata=i;
+
             if(this.what==1){
+                Log.e("endsrcdata",":"+endsrcdata);
                 break;
             }
         }
     }
-    else{}}
-
+ }
 }
 
 
