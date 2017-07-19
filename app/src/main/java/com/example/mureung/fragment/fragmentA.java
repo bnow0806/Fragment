@@ -17,11 +17,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.kakao.KakaoLink;
+/*import com.kakao.KakaoLink;
 
 import com.kakao.KakaoParameterException;
 import com.kakao.KakaoTalkLinkMessageBuilder;
-import com.kakao.internal.LinkObject;
+import com.kakao.internal.LinkObject;*/
 
 /**
  * Created by HyunJe on 2017-07-11.
@@ -30,8 +30,8 @@ import com.kakao.internal.LinkObject;
 
 public class fragmentA extends Fragment{
 
-    private KakaoLink kakaoLink;
-    private KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder;
+    /*private KakaoLink kakaoLink;
+    private KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder;*/
     //카카오 링크보내는 클래스들
 
     MapView   mMapView;

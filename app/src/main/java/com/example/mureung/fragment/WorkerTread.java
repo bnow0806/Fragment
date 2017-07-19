@@ -10,65 +10,69 @@ import android.util.Log;
 //작업 스레드(handler 클래스를 이용)-progressbar
 
 public class WorkerTread extends Thread {
-Handler handler;
-static int endsrcdata =0;
-String newsrcdata= null;
-int what=0;
-int i;// 현재값
+    Handler handler;
+    static int endsrcdata = 0;
+    String newsrcdata = null;
 
-    WorkerTread(Handler handler, String newsrcdata, int oldsrcdata){
-        this.handler=handler;
-        this.newsrcdata=newsrcdata;
-        this.i=oldsrcdata;
+    int what = 0;
+    int i;// 현재값
+
+    WorkerTread(Handler handler, String newsrcdata, int oldsrcdata) {
+        this.handler = handler;
+        this.newsrcdata = newsrcdata;
+        this.i = oldsrcdata;
     }
 
-public void run(){
-    int src = Integer.parseInt(newsrcdata);
-    Log.e("src:",String.valueOf(src));
-    Log.e("i:",String.valueOf(i));
-    if(i==src){
-    // 유지코드
-    }
-    if(i < src ){
-        while(i <= src){
-            try{
-                Thread.sleep(10);//기다리는 함수
-            }catch(Exception e){}
+    public void run() {
+        int src = Integer.parseInt(newsrcdata);
+        Log.e("src:", String.valueOf(src));
+        Log.e("i:", String.valueOf(i));
+/*        while (what==0) {*/
 
-            Message msg=new Message();
-            msg.arg1=i;
-            handler.sendMessage(msg);
-            i=i+1;
-            endsrcdata=i;
+            if (i == src) {
+                // 유지코드
+            }
+            if (i < src) {
+                while (i <= src) {
+                    try {
+                        Thread.sleep(10);//기다리는 함수
+                    } catch (Exception e) {
+                    }
+
+                    Message msg = new Message();
+                    msg.arg1 = i;
+                    handler.sendMessage(msg);
+                    i = i + 1;
+                    endsrcdata = i;
 
             if(this.what==1){
                 Log.e("endsrcdata",":"+endsrcdata);
                 break;
             }
-        }
-    }
-    else if(i> src){
-        while(i>=src){
-            try{
-                Thread.sleep(10);//기다리는 함수
-            }catch(Exception e){}
+                }
+            } else if (i > src) {
+                while (i >= src) {
+                    try {
+                        Thread.sleep(10);//기다리는 함수
+                    } catch (Exception e) {
+                    }
 
-            Message msg=new Message();
-            msg.arg1=i;
-            handler.sendMessage(msg);
-            i=i-1;
-            endsrcdata=i;
+                    Message msg = new Message();
+                    msg.arg1 = i;
+                    handler.sendMessage(msg);
+                    i = i - 1;
+                    endsrcdata = i;
 
             if(this.what==1){
                 Log.e("endsrcdata",":"+endsrcdata);
                 break;
             }
+                }
+            }
         }
     }
- }
-}
 
-
+/*}*/
 
 
 

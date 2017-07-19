@@ -41,7 +41,7 @@ public class fragmentB extends Fragment {
    //progressbar 변수 및 초기값 선언
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragmentb, container, false);
+        final View view = inflater.inflate(R.layout.fragmentb2, container, false);
         //inflate 로 fragment layout 설정
 
         TextView fuel1=(TextView)view.findViewById(R.id.fuel1);
@@ -50,7 +50,7 @@ public class fragmentB extends Fragment {
 
         //layout 값들 선언
 
-        View.OnClickListener listener=new View.OnClickListener(){
+        View.OnClickListener listener=new View.OnClickListener(){//onclick에 스레드멈춤담는법 없을까?-무의미
             public void onClick(View v){
                 eidtsrc=(EditText)view.findViewById(R.id.edit_src) ;
                 srcdata = eidtsrc.getText().toString();
@@ -59,13 +59,14 @@ public class fragmentB extends Fragment {
                 thread= new WorkerTread(handler, srcdata, oldsrcdata);
                 thread.what=0;
                 thread.start();
+
                 //timer 로 일정시간후 thread 반복 동작을 멈추게함
 
-                new Timer().schedule(new TimerTask() { public void run() {
+               /* new Timer().schedule(new TimerTask() { public void run() {
                     thread.what=1;
                     oldsrcdata=thread.endsrcdata;
                     Log.e("777",String.valueOf(oldsrcdata));
-                } }, 3000);
+                } }, 3000);*/
 
                 /*oldsrcdata=thread.endsrcdata;
                 Log.e("777",String.valueOf(oldsrcdata));*/
@@ -75,7 +76,15 @@ public class fragmentB extends Fragment {
         Button button=(Button)view.findViewById(R.id.button);
         button.setOnClickListener(listener);
 
-
+        View.OnClickListener listener2=new View.OnClickListener(){
+            public void onClick(View v){
+                thread.what=1;
+                oldsrcdata=thread.endsrcdata;//선후관계 확실하게 해줘야됨!
+            }
+        };
+                Button button2=(Button)view.findViewById(R.id.button2);
+                button2.setOnClickListener(listener2);
+    //reset button 으로 제어하는 방법
 
         fuel1.setText(avgfuel+"원");
         //퍼센트값 text에 들어갈 값을 데이터로 설정
