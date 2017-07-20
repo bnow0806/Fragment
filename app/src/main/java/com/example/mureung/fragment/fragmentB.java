@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.WorkerThread;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,21 +46,51 @@ public class fragmentB extends Fragment {
         final View view = inflater.inflate(R.layout.fragmentb2, container, false);
         //inflate 로 fragment layout 설정
 
+
+        /*view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if( keyCode == KeyEvent.KEYCODE_BACK ) {
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    Log.e("backbutton","ok");
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });*///back 버튼-앱종료 처리하기!
+
         TextView fuel1=(TextView)view.findViewById(R.id.fuel1);
         progress=(TextView)view.findViewById(R.id.progress);
-
+       /* thread= new WorkerTread(handler, srcdata, oldsrcdata);
+        thread.what=1;*/
 
         //layout 값들 선언
-
+        thread=  new WorkerTread(handler, srcdata, oldsrcdata);
         View.OnClickListener listener=new View.OnClickListener(){//onclick에 스레드멈춤담는법 없을까?-무의미
             public void onClick(View v){
+               /* if(thread.what != 1){
+                    thread.what=1;
+                    oldsrcdata=thread.endsrcdata;
+
+                }else{}*/
+                thread.what=1;
+                oldsrcdata=thread.endsrcdata;
+
                 eidtsrc=(EditText)view.findViewById(R.id.edit_src) ;
                 srcdata = eidtsrc.getText().toString();
-                Log.e("111",srcdata);
+                Log.e("editsrc-srcdata :",srcdata);
 
-                thread= new WorkerTread(handler, srcdata, oldsrcdata);
+                /*thread.newsrcdata=srcdata;
+                thread.oldsrcdata=oldsrcdata;*/
+                //thread= new WorkerTread(handler, srcdata, oldsrcdata);
+                //thread.what=0;
+                thread=  new WorkerTread(handler, srcdata, oldsrcdata);
+               /* thread.srcdata=srcdata;
+                thread.oldsrcdata=oldsrcdata;*/
                 thread.what=0;
                 thread.start();
+                Log.e("onClick last","999");
 
                 //timer 로 일정시간후 thread 반복 동작을 멈추게함
 
@@ -92,9 +124,11 @@ public class fragmentB extends Fragment {
         mProgress.setProgress(0);
         progress.setText(0.0+"%");//progressbar 옆 숫자 초기값 지정
 
+
         //handler class를 이용한 ui스레드 제어
         handler=new Handler(){
             public void handleMessage(Message msg){
+
                 mProgress.setProgress(msg.arg1);
                 progress.setText((double)msg.arg1/10+"%");
                 Log.e("444","444");
@@ -104,12 +138,7 @@ public class fragmentB extends Fragment {
         thread.start();*/
         return view;
 }
-
-
-
 }
-
-
 
 
 
