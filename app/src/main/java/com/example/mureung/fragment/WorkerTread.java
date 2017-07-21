@@ -25,7 +25,7 @@ public class WorkerTread extends Thread {
         this.oldsrcdata = oldsrcdata;}  // thread 입력 인자값 할당
 
     public void run() {
-        if(this.srcdata==null){src=0;}
+        if(srcdata.equals("")){src=0;} //초기값 오류 방지
         else{src = Integer.parseInt(srcdata);}    //형변환
 
         int i=this.oldsrcdata;
@@ -39,7 +39,7 @@ public class WorkerTread extends Thread {
         if (i < src) {
             while (i < src) {
                 try {
-                    Thread.sleep(10);//기다리는 함수
+                    Thread.sleep(8);//기다리는 함수
                 } catch (Exception e) {
                 }
 
@@ -55,7 +55,7 @@ public class WorkerTread extends Thread {
             }} else if (i > src) {
                 while (i > src) {
                     try {
-                        Thread.sleep(10);//기다리는 함수
+                        Thread.sleep(8);//기다리는 함수
                     } catch (Exception e) {
                     }
 
@@ -69,36 +69,6 @@ public class WorkerTread extends Thread {
                         break;}
                 }
             }
-        }
-    }
+    }}
 
 /*}*/
-
-
-
-
-
-
-//i를 0~1000, 1000~0, 0~1000 시뮬레이터
-   /*for(int i=0;i<1001;i++){
-        try{
-            Thread.sleep(10);//기다리는 함수
-        }catch(Exception e){}
-        Message msg=new Message();
-        msg.arg1=i;
-        handler.sendMessage(msg);}
-
-    for(int j=1001;j>0;j--){
-        try{
-            Thread.sleep(10);
-        }catch(Exception e){}
-        Message msg=new Message();
-        msg.arg1=j;
-        handler.sendMessage(msg);}
-    for(int k=0;k<1001;k++){
-        try{
-            Thread.sleep(10);
-        }catch(Exception e){}
-        Message msg=new Message();
-        msg.arg1=k;
-        handler.sendMessage(msg);}*/
