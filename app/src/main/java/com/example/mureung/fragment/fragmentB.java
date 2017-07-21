@@ -53,6 +53,7 @@ public class fragmentB extends Fragment {
 
             thread.what = 0;
             thread.start();
+            Log.e("threadcount,",":"+Thread.activeCount());
         }
     };
     Button button = (Button) view.findViewById(R.id.button);
@@ -73,6 +74,7 @@ public class fragmentB extends Fragment {
                 progress.setText((double)msg.arg1/10+"%");
             }
         };
+
         return view;
 }}
 

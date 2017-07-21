@@ -29,13 +29,15 @@ public class WorkerTread extends Thread {
         else{src = Integer.parseInt(srcdata);}    //형변환
 
         int i=this.oldsrcdata;
-        Log.e("src:", String.valueOf(src));
-        Log.e("i:", String.valueOf(i));
+        Log.e("src:new", String.valueOf(src));
+        Log.e("i:old", String.valueOf(i));
 /*        while (what==0) {*/
         Log.e("thread is running", "888");
         if (i == src) {
            // 유지코드
         }
+
+
         if (i < src) {
             while (i < src) {
                 try {
