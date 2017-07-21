@@ -5,7 +5,7 @@ import android.util.Log;
 
 
 /**
- * Created by HyunJe on 2017-07-14.
+ * Created by HyunJe on 2017-07-21.
  */
 //작업 스레드(handler 클래스를 이용)-progressbar
 

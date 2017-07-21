@@ -1,5 +1,4 @@
 package com.example.mureung.fragment;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 
 
 /**
- * Created by HyunJe on 2017-07-14.
+ * Created by HyunJe on 2017-07-21.
  */
 
 //실시간 대쉬보드, 연료탭 모드
@@ -33,53 +32,33 @@ public class fragmentB extends Fragment {
    //progressbar 변수 및 초기값 선언
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragmentb, container, false);
-        //inflate 로 fragment layout 설정
-
+        final View view = inflater.inflate(R.layout.fragmentb, container, false);   //inflate 로 fragment layout 설정
         TextView fuel1=(TextView)view.findViewById(R.id.fuel1);
-        progress=(TextView)view.findViewById(R.id.progress);
+        progress=(TextView)view.findViewById(R.id.progress); //layout 값들 선언
 
-        //layout 값들 선언
-        thread=  new WorkerTread(handler, srcdata, oldsrcdata);
-        View.OnClickListener listener=new View.OnClickListener(){
-            public void onClick(View v){
+//if() { // ui 생성, 제거-1 + 스레드 전체개수 제한-2
+    thread = new WorkerTread(handler, srcdata, oldsrcdata); // new workthread를 만들어서 thread 에 대입
 
-                thread.what=1;
-                oldsrcdata=thread.endsrcdata;
+    View.OnClickListener listener = new View.OnClickListener() {
+        public void onClick(View v) {
+            thread.what = 1;
+            oldsrcdata = thread.endsrcdata;
 
-                eidtsrc=(EditText)view.findViewById(R.id.edit_src) ;
-                srcdata = eidtsrc.getText().toString();
-                Log.e("editsrc-srcdata :",srcdata);
+            eidtsrc = (EditText) view.findViewById(R.id.edit_src);
+            srcdata = eidtsrc.getText().toString();
 
-                thread=  new WorkerTread(handler, srcdata, oldsrcdata);
+            thread = new WorkerTread(handler, srcdata, oldsrcdata);
                /* thread.srcdata=srcdata;
                 thread.oldsrcdata=oldsrcdata;*/
-                thread.what=0;
-                thread.start();
-                Log.e("onClick last","999");
 
-                //timer 로 일정시간후 thread 반복 동작을 멈추게함
-               /* new Timer().schedule(new TimerTask() { public void run() {
-                    thread.what=1;
-                    oldsrcdata=thread.endsrcdata;
-                    Log.e("777",String.valueOf(oldsrcdata));
-                } }, 3000);*/
+            thread.what = 0;
+            thread.start();
+        }
+    };
+    Button button = (Button) view.findViewById(R.id.button);
+    button.setOnClickListener(listener);
 
-                }
-        };
-        Button button=(Button)view.findViewById(R.id.button);
-        button.setOnClickListener(listener);
 
-        /*View.OnClickListener listener2=new View.OnClickListener(){
-            public void onClick(View v){
-                thread.what=1;
-                oldsrcdata=thread.endsrcdata;//선후관계 확실하게 해줘야됨!
-            }
-        };
-                Button button2=(Button)view.findViewById(R.id.button2);
-                button2.setOnClickListener(listener2);
-    //reset button 으로 제어하는 방법
-*/
         fuel1.setText(avgfuel+"원");
         //퍼센트값 text에 들어갈 값을 데이터로 설정
         mProgress=(ProgressBar) view.findViewById(R.id.progress_bar);
@@ -92,39 +71,29 @@ public class fragmentB extends Fragment {
 
                 mProgress.setProgress(msg.arg1);
                 progress.setText((double)msg.arg1/10+"%");
-                Log.e("444","444");
             }
         };
         return view;
-}
-}
+}}
 
 
 
 
+//timer 로 일정시간후 thread 반복 동작을 멈추게함
+               /* new Timer().schedule(new TimerTask() { public void run() {
+                    thread.what=1;
+                    oldsrcdata=thread.endsrcdata;
+                    Log.e("777",String.valueOf(oldsrcdata));
+                } }, 3000);*/
 
-//progress bar 동작 정의-작업스레드 정의(자체정의 방법)
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //실제 동작 함수
-                while (mProgressStatus<1000){
-                    try{
-                        Thread.sleep(10);//()시간동안 기다리는 함수
-                    }catch (Exception e){}
-
-                    i=i+1;
-                    mProgressStatus= i;//status값 1씩 증가
-
-                    //progressbar ui 업데이트-ui스레드
-                    mProgress.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mProgress.setProgress(mProgressStatus);
-                            progress.setText((double)mProgressStatus/10+"%");//progressbar, text 출력
-                        }
-                    });
-                }
+ /*View.OnClickListener listener2=new View.OnClickListener(){
+            public void onClick(View v){
+                thread.what=1;
+                oldsrcdata=thread.endsrcdata;//선후관계 확실하게 해줘야됨!
             }
-        }).start();*/
-
+        };
+                Button button2=(Button)view.findViewById(R.id.button2);
+                button2.setOnClickListener(listener2);
+    //reset button 으로 제어하는 방법
+*/
+ //runnable - 자체 구현방법

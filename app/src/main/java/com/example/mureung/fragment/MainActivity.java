@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+/**
+ * Created by HyunJe on 2017-07-21.
+ */
 
 public class MainActivity extends AppCompatActivity {
 
