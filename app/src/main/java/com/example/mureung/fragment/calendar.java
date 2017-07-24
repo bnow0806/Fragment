@@ -22,7 +22,7 @@ import java.util.Locale;
  */
 
 public class calendar extends Fragment {
-    TextView tvDate;
+    TextView tvDate;//
     GridAdapter gridAdapter;
     ArrayList<String> dayList;
     GridView gridView;
