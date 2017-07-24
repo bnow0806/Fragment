@@ -24,7 +24,7 @@ public class fragmentB extends Fragment {
 
     private ProgressBar mProgress;
     Handler handler;
-    public WorkerTread thread=null;
+    public WorkerThread thread=null;
     TextView progress;
     EditText eidtsrc;
     String srcdata=null;
@@ -32,12 +32,12 @@ public class fragmentB extends Fragment {
    //progressbar 변수 및 초기값 선언
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragmentb, container, false);   //inflate 로 fragment layout 설정
+        final View view = inflater.inflate(R.layout.fragmentb2, container, false);   //inflate 로 fragment layout 설정
         TextView fuel1=(TextView)view.findViewById(R.id.fuel1);
         progress=(TextView)view.findViewById(R.id.progress); //layout 값들 선언
 
 //if() { // ui 생성, 제거-1 + 스레드 전체개수 제한-2
-    thread = new WorkerTread(handler, srcdata, oldsrcdata); // new workthread를 만들어서 thread 에 대입
+    thread = new WorkerThread(handler, srcdata, oldsrcdata); // new workthread를 만들어서 thread 에 대입
 
     View.OnClickListener listener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -47,9 +47,10 @@ public class fragmentB extends Fragment {
             eidtsrc = (EditText) view.findViewById(R.id.edit_src);
             srcdata = eidtsrc.getText().toString();
 
-            thread = new WorkerTread(handler, srcdata, oldsrcdata);
-               /* thread.srcdata=srcdata;
-                thread.oldsrcdata=oldsrcdata;*/
+            thread = new WorkerThread(handler, srcdata, oldsrcdata);
+            /*thread.handler=handler;
+            thread.srcdata=srcdata;
+            thread.oldsrcdata=oldsrcdata;*/
 
             thread.what = 0;
             thread.start();
@@ -58,6 +59,17 @@ public class fragmentB extends Fragment {
     };
     Button button = (Button) view.findViewById(R.id.button);
     button.setOnClickListener(listener);
+
+View.OnClickListener listener2=new View.OnClickListener(){
+            public void onClick(View v){
+                /*thread.what=1;
+                oldsrcdata=thread.endsrcdata;//선후관계 확실하게 해줘야됨!*/
+                thread.interrupt();
+            }
+        };
+                Button button2=(Button)view.findViewById(R.id.button2);
+                button2.setOnClickListener(listener2);
+    //reset button 으로 제어하는 방법
 
 
         fuel1.setText(avgfuel+"원");
@@ -77,6 +89,14 @@ public class fragmentB extends Fragment {
 
         return view;
 }}
+
+
+
+
+
+
+
+
 
 
 

@@ -9,7 +9,7 @@ import android.util.Log;
  */
 //작업 스레드(handler 클래스를 이용)-progressbar
 
-public class WorkerTread extends Thread {
+public class WorkerThread extends Thread {
     Handler handler;
     static int endsrcdata=0;
     String srcdata = null;
@@ -19,24 +19,25 @@ public class WorkerTread extends Thread {
 
     int what = 0;// 현재값
 
-    WorkerTread(Handler handler, String srcdata, int oldsrcdata) {
+    WorkerThread(Handler handler, String srcdata, int oldsrcdata) {
         this.handler = handler;
         this.srcdata = srcdata;
         this.oldsrcdata = oldsrcdata;}  // thread 입력 인자값 할당
 
     public void run() {
+
         if(srcdata.equals("")){src=0;} //초기값 오류 방지
         else{src = Integer.parseInt(srcdata);}    //형변환
 
         int i=this.oldsrcdata;
         Log.e("src:new", String.valueOf(src));
         Log.e("i:old", String.valueOf(i));
-/*        while (what==0) {*/
-        Log.e("thread is running", "888");
+while (0==0){//계속 돌게함
+            /*try{*/
+                Log.e("thread is running", "alive");
         if (i == src) {
            // 유지코드
         }
-
 
         if (i < src) {
             while (i < src) {
@@ -69,8 +70,19 @@ public class WorkerTread extends Thread {
 
                     if (this.what == 1) {
                         break;}
-                }
-            }
-    }}
+                }}
+                        /*try {
+                            Log.e("123","sleep");
+                            Thread.sleep(1000000);
+                        } catch (InterruptedException e) {
+                            Log.e("interrupted","exception");
+                        }*/
 
-/*}*/
+    }} /*catch(Exception e){
+    Log.e("interrupted","exception");
+    }*/
+
+
+    }
+/*
+}*/
