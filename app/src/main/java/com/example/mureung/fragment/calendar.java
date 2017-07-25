@@ -26,10 +26,8 @@ public class calendar extends Fragment {
     private GridAdapter gridAdapter;
     private GridView gridView;
     private ArrayList<String> dayList;
-
     private Calendar mCal;
-    private int scalar=20;
-    private ViewGroup g=null;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_calendar, container, false);
@@ -68,8 +66,6 @@ public class calendar extends Fragment {
             dayList.add("토");
 
             mCal = Calendar.getInstance();  //calendar instance 생성
-
-
 
             //이번달 1일 무슨요일인지 판단 mCal.set(Year,Month,Day)
 
@@ -135,13 +131,13 @@ public class calendar extends Fragment {
 
 
         @Override
-        public View getView(int scalar, View convertView, ViewGroup g) {
+        public View getView(int position, View convertView, ViewGroup parent) {
             Log.e("getView","alive");
             ViewHolder holder=null;
 
             if (convertView == null) {      //초기에 convertView=null, convertView는 재활용과 관련된 파라메터
 
-                convertView = inflater.inflate(R.layout.item_calendar_gridview, g, false);
+                convertView = inflater.inflate(R.layout.item_calendar_gridview, parent, false);
 
                 holder = new ViewHolder();
                 holder.tvItemGridView = (TextView)convertView.findViewById(R.id.tv_item_gridview);
@@ -150,8 +146,7 @@ public class calendar extends Fragment {
                 holder = (ViewHolder)convertView.getTag();      //convetView 가 null 이 아닌 경우에는 convertView 에 붙여놓았던 textView 를 그냥 가져다 쓰면 된다.
             }
 
-            holder.tvItemGridView.setText(" "+getItem(scalar));   //itemgridview에 입력할 텍스트값 대입(여백포함)
-            Log.e("scalar",""+scalar);
+            holder.tvItemGridView.setText(" "+getItem(position));   //itemgridview에 입력할 텍스트값 대입(여백포함)
             //해당 날짜 텍스트 컬러,배경 변경
 
             mCal = Calendar.getInstance();
@@ -159,40 +154,26 @@ public class calendar extends Fragment {
             //오늘 day 가져옴
             Integer today = mCal.get(Calendar.DAY_OF_MONTH);
             String sToday = String.valueOf(today);
-            String test = "200";
                Log.e("sToday",""+sToday);
-            int i = 0;
-            i ++;
-            if(sToday.equals(getItem(i))){
 
-            }
-            Log.e("arraylist",""+list.get(i).);
-            /*Log.e("position",""+position);
+            //parsing and  그루핑
+            ArrayList<String> test;
+            test = new ArrayList<String>();// 한번에 할당 고민
+            test.add("10");
+            test.add("11");
+            test.add("12");
+            test.add("13");
 
-            if(getItem(position).equals("17")){
-
-            }*/
-
-            /*for(int i = 0; i < getCount(); i++) {
-
-                if (sToday.equals(getItem(i))) {                 //오늘날짜 =  getitem(position) 판단
+                if (test.contains(getItem(position))) {                 //오늘날짜 =  getitem(position) 판단
 
                     holder.tvItemGridView.setBackgroundResource(R.drawable.ic_local_gas_station_black_24dp);
-                    Log.e("today", "" + getItem(position));
-                }
-
-                if (test.equals(getItem(i))) {             //test 17일
                     holder.tvItemGridView.setTextColor(getResources().getColor(R.color.today_color));
                 }
 
-            }*/
-
             return convertView; //변경된 convertView
+            }
+
         }
-
-    }
-
-
 
     private class ViewHolder {      //뷰들을 보관하는 객체
 
