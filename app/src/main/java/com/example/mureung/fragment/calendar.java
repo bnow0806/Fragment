@@ -4,11 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,16 +30,27 @@ public class calendar extends Fragment {
     private GridView gridView;
     private ArrayList<String> dayList;
     private Calendar mCal;
+    ViewFlipper flipper;
+    int counter=1;
+    float xAtDown;
+    float xAtUp;
+    private TextView view1;
+    private int c=1;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_calendar, container, false);
 
             tvDate = (TextView)view.findViewById(R.id.tv_date);
-            gridView = (GridView)view.findViewById(R.id.gridview);
 
 
             // 오늘에 날짜를 세팅 해준다.
+             flipper = (ViewFlipper) view.findViewById(R.id.viewFlipper);
+
+
+            view1=(TextView) view.findViewById(R.id.view1);
+            view1.setText(String.valueOf(counter));
 
             long now = System.currentTimeMillis(); //long을 int로 바꾸면 에러남
             final Date date = new Date(now);
@@ -80,8 +94,52 @@ public class calendar extends Fragment {
 
             setCalendarDate(mCal.get(Calendar.MONTH) + 1);  //+1: 1월달이 0 이기 때문
 
+            gridView = (GridView)view.findViewById(R.id.gridview);
             gridAdapter = new GridAdapter(getActivity().getApplicationContext(), dayList);
             gridView.setAdapter(gridAdapter);
+
+        //그리드뷰 터치리스터
+            gridView.setOnTouchListener(new View.OnTouchListener()
+             {
+            @Override
+            public boolean onTouch(@SuppressWarnings("unused") View view, MotionEvent event)
+            {
+                // 터치 이벤트가 일어난 뷰가 ViewFlipper가 아니면 return
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    xAtDown = event.getX(); // 터치 시작지점 x좌표 저장
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    xAtUp = event.getX(); // 터치 끝난지점 x좌표 저장
+                }
+
+                if (xAtUp < xAtDown) {
+                    // 다음 view 보여줌
+               /* flipper.showNext();*/
+
+                    counter=counter+1;
+                    c=c+1;
+                    view1.setText(String.valueOf(counter));
+                    /*gridView = (GridView)view.findViewById(R.id.gridview);
+                    gridAdapter = new GridAdapter(getActivity().getApplicationContext(), dayList);
+                    gridView.setAdapter(gridAdapter);*/
+                    Log.e("xAtuP"+String.valueOf(xAtUp),"xAtDown"+String.valueOf(xAtDown));
+
+                } else if (xAtUp > xAtDown) {
+                    // 전 view 보여줌
+                /*flipper.showPrevious();*/
+
+                    counter=counter-1;
+                    c=c-1;
+                    view1.setText(String.valueOf(counter));
+                    /*gridView = (GridView)view.findViewById(R.id.gridview);    //그림 다시그리는 코드
+                    gridAdapter = new GridAdapter(getActivity().getApplicationContext(), dayList);
+                    gridView.setAdapter(gridAdapter);*/
+                    Log.e("xAtuP"+String.valueOf(xAtUp),"xAtDown"+String.valueOf(xAtDown));
+                }
+                return true;
+            }
+        });
+
 
         return view;
 
@@ -95,7 +153,6 @@ public class calendar extends Fragment {
             dayList.add("" + (i + 1));
         }
     }
-
 
     private class GridAdapter extends BaseAdapter { //GridAdapter 안에 getView가 있음
 
@@ -125,9 +182,7 @@ public class calendar extends Fragment {
 
         @Override
         public long getItemId(int position) {
-
-            return position;
-        }
+            return position;}
 
 
         @Override
@@ -172,6 +227,14 @@ public class calendar extends Fragment {
                     holder.tvItemGridView.setBackgroundResource(R.drawable.ic_local_gas_station_black_24dp);
                     holder.tvItemGridView.setTextColor(getResources().getColor(R.color.today_color));
                 }
+                //test
+
+            if (String.valueOf(c).equals(getItem(position))) {                 //오늘날짜 =  getitem(position) 판단
+
+                holder.tvItemGridView.setBackgroundResource(R.drawable.ic_local_gas_station_black_24dp);
+                holder.tvItemGridView.setTextColor(getResources().getColor(R.color.today_color));
+            }
+
 
             return convertView; //변경된 convertView
             }
