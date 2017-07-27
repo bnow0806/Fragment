@@ -5,7 +5,7 @@ import android.util.Log;
 
 
 /**
- * Created by HyunJe on 2017-07-21.
+ * Created by HyunJe on 2017-07-14.
  */
 //작업 스레드(handler 클래스를 이용)-progressbar
 
@@ -25,24 +25,21 @@ public class WorkerThread extends Thread {
         this.oldsrcdata = oldsrcdata;}  // thread 입력 인자값 할당
 
     public void run() {
-
-        if(srcdata.equals("")){src=0;} //초기값 오류 방지
+        if(this.srcdata==null){src=0;}
         else{src = Integer.parseInt(srcdata);}    //형변환
 
         int i=this.oldsrcdata;
-        Log.e("src:new", String.valueOf(src));
-        Log.e("i:old", String.valueOf(i));
-while (0==0){//계속 돌게함
-            /*try{*/
-                Log.e("thread is running", "alive");
+        Log.e("src:", String.valueOf(src));
+        Log.e("i:", String.valueOf(i));
+/*        while (what==0) {*/
+        Log.e("thread is running", "888");
         if (i == src) {
            // 유지코드
         }
-
         if (i < src) {
             while (i < src) {
                 try {
-                    Thread.sleep(8);//기다리는 함수
+                    Thread.sleep(10);//기다리는 함수
                 } catch (Exception e) {
                 }
 
@@ -58,7 +55,7 @@ while (0==0){//계속 돌게함
             }} else if (i > src) {
                 while (i > src) {
                     try {
-                        Thread.sleep(8);//기다리는 함수
+                        Thread.sleep(10);//기다리는 함수
                     } catch (Exception e) {
                     }
 
@@ -70,19 +67,38 @@ while (0==0){//계속 돌게함
 
                     if (this.what == 1) {
                         break;}
-                }}
-                        /*try {
-                            Log.e("123","sleep");
-                            Thread.sleep(1000000);
-                        } catch (InterruptedException e) {
-                            Log.e("interrupted","exception");
-                        }*/
-
-    }} /*catch(Exception e){
-    Log.e("interrupted","exception");
-    }*/
-
-
+                }
+            }
+        }
     }
-/*
-}*/
+
+/*}*/
+
+
+
+
+
+
+//i를 0~1000, 1000~0, 0~1000 시뮬레이터
+   /*for(int i=0;i<1001;i++){
+        try{
+            Thread.sleep(10);//기다리는 함수
+        }catch(Exception e){}
+        Message msg=new Message();
+        msg.arg1=i;
+        handler.sendMessage(msg);}
+
+    for(int j=1001;j>0;j--){
+        try{
+            Thread.sleep(10);
+        }catch(Exception e){}
+        Message msg=new Message();
+        msg.arg1=j;
+        handler.sendMessage(msg);}
+    for(int k=0;k<1001;k++){
+        try{
+            Thread.sleep(10);
+        }catch(Exception e){}
+        Message msg=new Message();
+        msg.arg1=k;
+        handler.sendMessage(msg);}*/

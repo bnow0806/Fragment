@@ -12,6 +12,10 @@ import android.widget.ViewFlipper;
 /**
  * Created by HyunJe on 2017-07-26.
  */
+
+//touch test하기 위한 activity
+
+/*
 public class test extends Activity implements View.OnTouchListener{
 
     ViewFlipper flipper;
@@ -21,7 +25,9 @@ public class test extends Activity implements View.OnTouchListener{
     float xAtDown;
     float xAtUp;
 
-    /** Called when the activity is first created. */
+    */
+/** Called when the activity is first created. *//*
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +56,18 @@ public class test extends Activity implements View.OnTouchListener{
 
             if (xAtUp < xAtDown) {
                 // 다음 view 보여줌
-               /* flipper.showNext();*/
+               */
+/* flipper.showNext();*//*
+
 
                counter=counter+1;
                 view1.setText(String.valueOf(counter));
 
             } else if (xAtUp > xAtDown) {
                 // 전 view 보여줌
-                /*flipper.showPrevious();*/
+                */
+/*flipper.showPrevious();*//*
+
 
                 counter=counter-1;
                 view1.setText(String.valueOf(counter));
@@ -66,3 +76,4 @@ public class test extends Activity implements View.OnTouchListener{
         return true;
     }
 }
+*/

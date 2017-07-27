@@ -24,6 +24,7 @@ import java.util.Locale;
  * http://heum-story.tistory.com/6 - 원본 코드
  */
 
+/*
 public class calendar extends Fragment {
     private TextView tvDate;
     private GridAdapter gridAdapter;
@@ -114,26 +115,34 @@ public class calendar extends Fragment {
 
                 if (xAtUp < xAtDown) {
                     // 다음 view 보여줌
-               /* flipper.showNext();*/
+               */
+/* flipper.showNext();*//*
+
 
                     counter=counter+1;
                     c=c+1;
                     view1.setText(String.valueOf(counter));
-                    /*gridView = (GridView)view.findViewById(R.id.gridview);
+                    */
+/*gridView = (GridView)view.findViewById(R.id.gridview);
                     gridAdapter = new GridAdapter(getActivity().getApplicationContext(), dayList);
-                    gridView.setAdapter(gridAdapter);*/
+                    gridView.setAdapter(gridAdapter);*//*
+
                     Log.e("xAtuP"+String.valueOf(xAtUp),"xAtDown"+String.valueOf(xAtDown));
 
                 } else if (xAtUp > xAtDown) {
                     // 전 view 보여줌
-                /*flipper.showPrevious();*/
+                */
+/*flipper.showPrevious();*//*
+
 
                     counter=counter-1;
                     c=c-1;
                     view1.setText(String.valueOf(counter));
-                    /*gridView = (GridView)view.findViewById(R.id.gridview);    //그림 다시그리는 코드
+                    */
+/*gridView = (GridView)view.findViewById(R.id.gridview);    //그림 다시그리는 코드
                     gridAdapter = new GridAdapter(getActivity().getApplicationContext(), dayList);
-                    gridView.setAdapter(gridAdapter);*/
+                    gridView.setAdapter(gridAdapter);*//*
+
                     Log.e("xAtuP"+String.valueOf(xAtUp),"xAtDown"+String.valueOf(xAtDown));
                 }
                 return true;
@@ -211,7 +220,9 @@ public class calendar extends Fragment {
             String sToday = String.valueOf(today);
                Log.e("sToday",""+sToday);
 
-            /*//parsing and  그루핑
+            */
+/*//*
+/parsing and  그루핑
             ArrayList<String> test;
             test = new ArrayList<String>();// 한번에 할당 고민
             test.add("10");
@@ -220,7 +231,8 @@ public class calendar extends Fragment {
             test.add("123456789");
 
             String parsing=test.get(3).substring(4,6);
-            Log.e("parsing","46:"+parsing);*/
+            Log.e("parsing","46:"+parsing);*//*
+
 
                 if (sToday.equals(getItem(position))) {                 //오늘날짜 =  getitem(position) 판단
 
@@ -247,3 +259,4 @@ public class calendar extends Fragment {
 }
 
 
+*/
