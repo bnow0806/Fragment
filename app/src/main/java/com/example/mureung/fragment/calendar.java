@@ -156,15 +156,18 @@ public class calendar extends Fragment {
             String sToday = String.valueOf(today);
                Log.e("sToday",""+sToday);
 
-            //parsing and  그루핑
+            /*//parsing and  그루핑
             ArrayList<String> test;
             test = new ArrayList<String>();// 한번에 할당 고민
             test.add("10");
             test.add("11");
             test.add("12");
-            test.add("13");
+            test.add("123456789");
 
-                if (test.contains(getItem(position))) {                 //오늘날짜 =  getitem(position) 판단
+            String parsing=test.get(3).substring(4,6);
+            Log.e("parsing","46:"+parsing);*/
+
+                if (sToday.equals(getItem(position))) {                 //오늘날짜 =  getitem(position) 판단
 
                     holder.tvItemGridView.setBackgroundResource(R.drawable.ic_local_gas_station_black_24dp);
                     holder.tvItemGridView.setTextColor(getResources().getColor(R.color.today_color));
@@ -172,7 +175,6 @@ public class calendar extends Fragment {
 
             return convertView; //변경된 convertView
             }
-
         }
 
     private class ViewHolder {      //뷰들을 보관하는 객체
