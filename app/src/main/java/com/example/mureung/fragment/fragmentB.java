@@ -26,97 +26,74 @@ import java.util.TimerTask;
 
 //실시간 대쉬보드, 연료탭 모드
 public class fragmentB extends Fragment {
+
     double avgfuel = 1560;
-//평균 유류비 초기값 선언
-
-    /*private  static  final int PROGRESS=0x1;
-    private  int mProgressStatus=0;
-    int i=0;*/ //작업스레드 변수선언
-
     private ProgressBar mProgress;
     Handler handler;
     public WorkerThread thread=null;
     TextView progress;
     EditText eidtsrc;
-    String srcdata=null;
+    String srcdata;
     public int oldsrcdata=0;
    //progressbar 변수 및 초기값 선언
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragmentb2, container, false);
+
         //inflate 로 fragment layout 설정
-
-
-        /*view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if( keyCode == KeyEvent.KEYCODE_BACK ) {
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                    Log.e("backbutton","ok");
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        });*///back 버튼-앱종료 처리하기!
 
         TextView fuel1=(TextView)view.findViewById(R.id.fuel1);
         progress=(TextView)view.findViewById(R.id.progress);
        /* thread= new WorkerTread(handler, srcdata, oldsrcdata);
         thread.what=1;*/
 
-        //layout 값들 선언
-        thread=  new WorkerThread (handler, srcdata, oldsrcdata);
-        View.OnClickListener listener=new View.OnClickListener(){//onclick에 스레드멈춤담는법 없을까?-무의미
-            public void onClick(View v){
-               /* if(thread.what != 1){
-                    thread.what=1;
-                    oldsrcdata=thread.endsrcdata;
+        //handler class를 이용한 ui스레드 제어
+        handler=new Handler(){
+            public void handleMessage(Message msg){     //thread로 부터 메세지 받아옴
 
-                }else{}*/
-                thread.what=1;
+                mProgress.setProgress(msg.arg1);
+                progress.setText((double)msg.arg1/10+"%");
+                Log.e("Handler is running","444");
+            }
+        };
+
+        //layout 값들 선언
+        thread=  new WorkerThread (handler, null);          //oldsrc는 1개의 스레드 일시 계속 주입해줄 필요 없어서 없앴음-i로 대체
+        thread.start();
+        View.OnClickListener listener=new View.OnClickListener(){
+
+            public void onClick(View v){
+
+                thread.what=1;      //i증감 반복 중지
                 oldsrcdata=thread.endsrcdata;
 
-                eidtsrc=(EditText)view.findViewById(R.id.edit_src) ;
+                eidtsrc=(EditText)view.findViewById(R.id.edit_src);
                 srcdata = eidtsrc.getText().toString();
                 Log.e("editsrc-srcdata :",srcdata);
 
-                /*thread.newsrcdata=srcdata;
-                thread.oldsrcdata=oldsrcdata;*/
-                //thread= new WorkerTread(handler, srcdata, oldsrcdata);
-                //thread.what=0;
-                thread=  new WorkerThread(handler, srcdata, oldsrcdata);
-               /* thread.srcdata=srcdata;
-                thread.oldsrcdata=oldsrcdata;*/
-                thread.what=0;
-                thread.start();
+               /* thread=  new WorkerThread(handler, srcdata, oldsrcdata);*/    //여기가 문제!!!!- 하나의 스레드 연속생성
+
+                thread.src= Integer.parseInt(srcdata);      //src에 직접 할당
+                thread.i= oldsrcdata;                       //i에 직접 할당
+                thread.what=0;      //i증감 반복 시작
+
                 Log.e("onClick last","999");
 
-                //timer 로 일정시간후 thread 반복 동작을 멈추게함
-
-               /* new Timer().schedule(new TimerTask() { public void run() {
-                    thread.what=1;
-                    oldsrcdata=thread.endsrcdata;
-                    Log.e("777",String.valueOf(oldsrcdata));
-                } }, 3000);*/
-
-                /*oldsrcdata=thread.endsrcdata;
-                Log.e("777",String.valueOf(oldsrcdata));*/
                 }
 
         };
         Button button=(Button)view.findViewById(R.id.button);
         button.setOnClickListener(listener);
 
-        View.OnClickListener listener2=new View.OnClickListener(){
+        View.OnClickListener listener2=new View.OnClickListener(){      //reset button 으로 제어하는 방법
             public void onClick(View v){
-                thread.what=1;
-                oldsrcdata=thread.endsrcdata;//선후관계 확실하게 해줘야됨!
+                thread.what=1;                  //살아있음에도 계속 break 되는것!!!
+                oldsrcdata=thread.endsrcdata;
             }
         };
                 Button button2=(Button)view.findViewById(R.id.button2);
                 button2.setOnClickListener(listener2);
-    //reset button 으로 제어하는 방법
+
 
         fuel1.setText(avgfuel+"원");
         //퍼센트값 text에 들어갈 값을 데이터로 설정
@@ -124,24 +101,22 @@ public class fragmentB extends Fragment {
         mProgress.setProgress(0);
         progress.setText(0.0+"%");//progressbar 옆 숫자 초기값 지정
 
-
-        //handler class를 이용한 ui스레드 제어
-        handler=new Handler(){
-            public void handleMessage(Message msg){
-
-                mProgress.setProgress(msg.arg1);
-                progress.setText((double)msg.arg1/10+"%");
-                Log.e("444","444");
-            }
-        };
-        /*thread= new WorkerTread(handler, srcdata);
-        thread.start();*/
         return view;
 }
 }
 
 
 
+
+
+
+//timer 로 일정시간후 thread 반복 동작을 멈추게함
+
+               /* new Timer().schedule(new TimerTask() { public void run() {
+                    thread.what=1;
+                    oldsrcdata=thread.endsrcdata;
+                    Log.e("777",String.valueOf(oldsrcdata));
+                } }, 3000);*/
 
 
 //progress bar 동작 정의-작업스레드 정의(자체정의 방법)

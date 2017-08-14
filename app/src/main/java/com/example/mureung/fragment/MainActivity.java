@@ -4,7 +4,7 @@ import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
+
 
 /**
  * Created by HyunJe on 2017-07-21.
