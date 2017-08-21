@@ -71,4 +71,12 @@
             android:textSize="20dp"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
+    <objectAnimator
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:duration="1000"
+        android:valueTo="200"
+        android:valueType="floatType"
+        android:propertyName="y"
+        android:repeatCount="1"
+        android:repeatMode="reverse"/>
 </LinearLayout>

@@ -49,15 +49,15 @@ public class fragmentB extends Fragment {
 
         //handler class를 이용한 ui스레드 제어
         handler=new Handler(){
-            public void handleMessage(Message msg){     //thread로 부터 메세지 받아옴
-
+            public void handleMessage(Message msg){     //thread로 부터 handler을 통해 메세지 받아옴
+                                                        //받아온 메세지로 할 동작 정의
                 mProgress.setProgress(msg.arg1);
                 progress.setText((double)msg.arg1/10+"%");
                 Log.e("Handler is running","444");
             }
         };
 
-        //layout 값들 선언
+        //handler 연결
         thread=  new WorkerThread (handler, null);          //oldsrc는 1개의 스레드 일시 계속 주입해줄 필요 없어서 없앴음-i로 대체
         thread.start();
         View.OnClickListener listener=new View.OnClickListener(){
